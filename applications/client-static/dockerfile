@@ -1,0 +1,5 @@
+FROM joseluisq/static-web-server
+
+COPY index.html /public
+COPY styles.css /public
+COPY main.js /public
