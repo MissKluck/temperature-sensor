@@ -1,3 +1,3 @@
 # IoT Sensor Network
 
-![architectures](documentation/architecture.png)
+![architecture](documentation/architecture.png)
