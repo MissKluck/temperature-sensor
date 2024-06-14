@@ -8,11 +8,21 @@ const report = {
     temperature: 17,
 }
 
+/** 
+ * @param {IncomingMessage} request
+ * @param {ServerResponse<IncomingMessage> & {
+ * req: IncomingMessage;
+ * }} response
+ */
+
 function getAllReports(request, response) {
     // Convert to network format
     const data = JSON.stringify(report)
 
     // Send the rsulting package
+    response.setHeader(
+        "Access-Control-Allow-Origin", '*'
+    )
     response.end(data)
 }
 
