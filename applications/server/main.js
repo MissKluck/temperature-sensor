@@ -1,5 +1,5 @@
 
-import { IncomingMessage, createServer } from 'node:http'
+import { ServerResponse, IncomingMessage, createServer } from 'node:http'
 
 
 const report = {
@@ -55,7 +55,6 @@ const server = createServer((request, response) => {
     logger(request)
     setCors(response)
     
-
     // Routing logic
         const path = request.url
         const method = request.method
@@ -73,8 +72,7 @@ const server = createServer((request, response) => {
     } else {
         response.writeHead(404)
         response.end("Resource not found")
-    }
-    
+    }  
 })
 
 // Start the server
