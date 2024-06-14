@@ -19,10 +19,8 @@ function getAllReports(request, response) {
     // Convert to network format
     const data = JSON.stringify(report)
 
-    // Send the rsulting package
-    response.setHeader(
-        "Access-Control-Allow-Origin", '*'
-    )
+    // Send the resulting package
+   
     response.end(data)
 }
 
@@ -45,10 +43,18 @@ function logger(request) {
     console.log(structuredLog)
 }
 
+function setCors(response) {
+    response.setHeader(
+        "Access-Control-Allow-Origin", '*'
+    )
+}
+
 // Create a new server
 const server = createServer((request, response) => {
     // Middleware --> setter opp noe logikk som skal ta og skje før vi sender det videre til de spesifikke handlerene
     logger(request)
+    setCors(response)
+    
 
     // Routing logic
         const path = request.url
