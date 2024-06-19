@@ -5,3 +5,11 @@ services:
       dockerfile: dockerfile
     ports:
       - 8080:80
+
+
+  server:
+    build:
+      context: ../applications/server
+      dockerfile: dockerfile
+    ports:
+      - 3000:3000

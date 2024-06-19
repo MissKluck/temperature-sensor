@@ -8,3 +8,6 @@ console.log(response)
 console.log(data)
 
 // Bruk dataen til å oppdatere html(dokumentet)
+const element = document.getElementById("temperature")
+element.textContent = data.temperature
+

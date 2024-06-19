@@ -76,6 +76,14 @@ const server = createServer((request, response) => {
 })
 
 // Start the server
-server.listen(3000, "localhost", () => {
+server.listen(3000, "0.0.0.0", () => {
     console.log("Server listening on http://localhost:3000")
+})
+
+// Lytt etter avslutningsmeldinger
+process.addListener("SIGTERM", () => { 
+    process.exit() 
+})
+process.addListener("SIGINT", () => { 
+    process.exit() 
 })
