@@ -13,3 +13,9 @@ services:
       dockerfile: dockerfile
     ports:
       - 3000:3000
+
+  sensor-temperature:
+    build:
+      context: ../applications/sensor-temperature
+      dockerfile: dockerfile
+    network_mode: host
