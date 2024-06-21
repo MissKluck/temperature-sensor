@@ -15,7 +15,7 @@ let reportId = 0
 function getAllReports(request, response) {
     // Convert to network format
     const data = JSON.stringify(reports)
-    
+
     // Send the resulting package
     response.end(data)
 }
@@ -31,11 +31,10 @@ function registerNewMeasurement(request, response) {
         const newReport = {
             reportId: reportId++,
             reportDate: new Date().toISOString(),
-            temperature: obj
+            temperature: obj.temperature,
         }
 
         reports.push(newReport)
-
         response.end("Report registered\n") 
     })
 
