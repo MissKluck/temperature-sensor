@@ -1,13 +1,31 @@
-// Hent data
+async function getLastestReport () {
+    // Hent data
 const response = await fetch("http://localhost:3000/reports")
-const data = await response.json()
+/**
+ * 
+ * The shape of the weather report from the Web API
+ * JSDoc can be used to document --> check Lars repository
+ * @link [JSDoc] https://jsdoc.
+ * 
+ * @typedef {Array<{
+ * sensorId: number,
+ * measurementDate: string,
+ * temperature: number }>}
+ */
 
+const weatherReports = await response.json()
+const lastWeatherReport = weatherReports[weatherReports.length - 1]
 
-// Logg data til konsollen
-console.log(response)
-console.log(data)
+console.log(lastWeatherReport)
+
 
 // Bruk dataen til å oppdatere html(dokumentet)
-const element = document.getElementById("temperature")
-element.textContent = data.temperature
+const temperatureElement = document.getElementById("temperature")
+temperatureElement.textContent = lastWeatherReport.temperature
 
+const timestampElement = document.getElementById("time")
+timestampElement.textContent = lastWeatherReport.reportDate
+
+
+setInterval(getLastestReport, 5 * 1000)
+ }
