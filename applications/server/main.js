@@ -2,7 +2,7 @@
 import { ServerResponse, IncomingMessage, createServer } from 'node:http'
 
 const reports = []
-    let reportId = 0
+let reportId = 0
 
 
 /** 
@@ -14,10 +14,9 @@ const reports = []
 
 function getAllReports(request, response) {
     // Convert to network format
-    const data = JSON.stringify(report)
-
+    const data = JSON.stringify(reports)
+    
     // Send the resulting package
-   
     response.end(data)
 }
 
