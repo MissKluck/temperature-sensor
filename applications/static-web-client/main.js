@@ -7,10 +7,7 @@ const response = await fetch("http://localhost:3000/reports")
  * JSDoc can be used to document --> check Lars repository
  * @link [JSDoc] https://jsdoc.
  * 
- * @typedef {Array<{
- * sensorId: number,
- * measurementDate: string,
- * temperature: number }>}
+ * @typedef {Array<weatherReports>}
  */
 
 const weatherReports = await response.json()
@@ -23,6 +20,16 @@ temperatureElement.textContent = lastWeatherReport.temperature
 const timestampElement = document.getElementById("time")
 timestampElement.textContent = lastWeatherReport.reportDate
 
+// Legg til nye elementer i tablet vårt
+console.log(weatherReports)
+ }
 
-setInterval(getLastestReport, 5 * 1000)
+ getLastestReport()
+ setInterval(getLastestReport, 5 * 1000)
+
+ function createNewTableEntry(report) {
+    const newRow = document.createElement("tr")
+
+
+    return newRow
  }

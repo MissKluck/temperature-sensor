@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,34 @@
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="main.js"></script>
 </head>
+
 <body>
     <h1>Hello World~</h1>
 
     <p>Temperature: <span id="temperature">Loading</span></p>
     <p>Time: <span id="time">Loading</span></p>
+
+    <hr>
+
+    <!-- Legge inn <table> her under -->
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Time</th>
+                <th scope="col">Temperature</th>
+            </tr>
+        </thead>
+
+        <tbody id="table-weather-reports">
+            <tr>
+                <td>kl <span class="timestamp"></span></td>
+                <td><span class="temperature"></span>°C</td>
+            </tr>
+        </tbody>
+
+        <tfoot></tfoot>
+    </table>
+
 </body>
+
 </html>
