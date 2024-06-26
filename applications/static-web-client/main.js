@@ -21,7 +21,16 @@ const timestampElement = document.getElementById("time")
 timestampElement.textContent = lastWeatherReport.reportDate
 
 // Legg til nye elementer i tablet vårt
-console.log(weatherReports)
+console.tableElement = getElementById("table-weather-reports")
+// Fjern alle underelementer i html
+tableElement.removeChildren
+
+for (const report of weatherReports) {
+    const newElement = createNewTableEntry(report)
+    tableElement.append(newElement)
+}
+
+
  }
 
  getLastestReport()
@@ -30,6 +39,15 @@ console.log(weatherReports)
  function createNewTableEntry(report) {
     const newRow = document.createElement("tr")
 
+    const timeObject = new Date(report.reportDate)
+    const formatTime = `${timeObject.getHours()}:${timeObject.getMinutes}:${timeOcject.getSeconds}`
+
+    newRow.innerHTML = `
+    <td>kl <span class="timestamp">${report.reportDate}</span></td>
+    <td><span class="temperature">${report.temperature}</span>°C</td>
+    `
+
+    newRow.append(timeElement, temperatureElement)
 
     return newRow
  }
