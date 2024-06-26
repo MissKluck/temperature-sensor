@@ -23,7 +23,7 @@ timestampElement.textContent = lastWeatherReport.reportDate
 // Legg til nye elementer i tablet vårt
 console.tableElement = getElementById("table-weather-reports")
 // Fjern alle underelementer i html
-tableElement.removeChildren
+tableElement.removeChildren // Må finne riktig kode fra Lars' git
 
 for (const report of weatherReports) {
     const newElement = createNewTableEntry(report)

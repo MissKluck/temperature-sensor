@@ -1,3 +1,30 @@
 * {
     background-color: pink
 }
+
+.table {
+    border-collapse: collapse;
+    border: 2px solid rgb(140 140 140);
+    width: 100%;
+}
+
+.table>thead {
+    border: 1px solid rgb(174 227 255);
+    padding: 8px 10px;
+}
+
+.table>tbody {
+    border: 1px solid rgb(170 227 255);
+}
+
+.table>tbody>tr {
+    padding: 0.4em;
+}
+
+.table>td {
+    padding: 0.2em;
+}
+
+.table>td:last-child {
+    text-align: right;
+}
