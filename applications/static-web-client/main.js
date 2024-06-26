@@ -16,9 +16,6 @@ const response = await fetch("http://localhost:3000/reports")
 const weatherReports = await response.json()
 const lastWeatherReport = weatherReports[weatherReports.length - 1]
 
-console.log(lastWeatherReport)
-
-
 // Bruk dataen til å oppdatere html(dokumentet)
 const temperatureElement = document.getElementById("temperature")
 temperatureElement.textContent = lastWeatherReport.temperature
