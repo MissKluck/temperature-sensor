@@ -1,21 +1,41 @@
 
 import { ServerResponse, IncomingMessage, createServer } from 'node:http'
-import { appendFile, readFile, mkdir } from 'node:fs/promises'
+import { appendFile, writeFile, readFile, mkdir } from 'node:fs/promises'
 
 let reportId = 0
+const reportsPath = "./data/reports.json"
+
+async function() {
+     // Create files and directory if they don't exist
+     try {
+        await readFile(reportsPath)
+    } catch (error) {
+        // File and/directory does not exist create them
+        try {
+            await mkdir("./data")
+        } catch (error) {
+            console.log("Folder existed")
+        }
+        await mkdir("./data")
+        await writeFile(reportsPath, "[]")
+    }
+}
 
 // IO (InputOutput) Function
 const reports = []
 async function appendReport(newReport) {
-    const reportString = JSON.stringify(newReport)
-    try {
-        console.log("trying to write to file")
-        await appendFile("./data/reports.txt", reportString, { encoding: "utf-8" })
-    } catch (error) {
-        console.log("failed, trying to create directory")
-        await mkdir("./data")
-        await appendFile("./data/reports.txt", reportString, { encoding: "utf-8" })
-    }
+   
+    // Read current stored data
+    const currentReportsRaw = await readFile(reportsPath)
+    const currentReports = JSON.parse(currentReportsRaw)
+
+    // Create a new data set
+    const newReports = [... currentReports, newReport]
+    const reportString = JSON.stringify(newReports)
+    
+    // Write to file
+    await writeFile(reportsPath, reportString, { encoding: "utf-8"})
+
     
 }
 
