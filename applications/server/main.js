@@ -5,7 +5,7 @@ import { appendFile, writeFile, readFile, mkdir } from 'node:fs/promises'
 let reportId = 0
 const reportsPath = "./data/reports.json"
 
-async function() {
+async function configureEnviroment() {
      // Create files and directory if they don't exist
      try {
         await readFile(reportsPath)
@@ -16,7 +16,6 @@ async function() {
         } catch (error) {
             console.log("Folder existed")
         }
-        await mkdir("./data")
         await writeFile(reportsPath, "[]")
     }
 }
@@ -125,6 +124,8 @@ const server = createServer((request, response) => {
         response.end("Resource not found")
     }  
 })
+
+configureEnviroment()
 
 // Start the server
 server.listen(3000, "0.0.0.0", () => {
