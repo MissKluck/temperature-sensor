@@ -1,8 +1,25 @@
 
 import { ServerResponse, IncomingMessage, createServer } from 'node:http'
+import { appendFile, readFile, mkdir } from 'node:fs/promises'
 
-const reports = []
 let reportId = 0
+
+// IO (InputOutput) Function
+const reports = []
+async function appendReport(newReport) {
+    const reportString = JSON.stringify(newReport)
+    try {
+        console.log("trying to write to file")
+        await appendFile("./data/reports.txt", reportString, { encoding: "utf-8" })
+    } catch (error) {
+        console.log("failed, trying to create directory")
+        await mkdir("./data")
+        await appendFile("./data/reports.txt", reportString, { encoding: "utf-8" })
+    }
+    
+}
+
+async function loadReports() {}
 
 
 /** 
@@ -34,6 +51,7 @@ function registerNewMeasurement(request, response) {
             temperature: obj.temperature,
         }
 
+        appendReport(newReport)
         reports.push(newReport)
         response.end("Report registered\n") 
     })
