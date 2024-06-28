@@ -1,6 +1,8 @@
 async function getLastestReport () {
     // Hent data
-const response = await fetch("http://localhost:3000/reports")
+
+    try {
+        const response = await fetch("http://localhost:3000/reports")
 /**
  * 
  * The shape of the weather report from the Web API
@@ -29,6 +31,10 @@ for (const report of weatherReports) {
     const newElement = createNewTableEntry(report)
     tableElement.append(newElement)
 }
+    } catch (error) {
+        console.log("Failed to contact server")
+    }
+
 
 
  }
