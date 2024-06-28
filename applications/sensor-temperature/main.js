@@ -15,10 +15,12 @@ function logTemperature() {
  console.log("logging new report")
  console.log(report)
  
-  fetch(serverAddress, {
+ try { fetch(serverAddress, {
     method: "POST", 
     body: JSON.stringify(report)
-  }) 
+  })} catch (error) {
+    console.log("Failed to fetch")
+  }
 }
 
 setInterval(logTemperature, 5 * 1000)
