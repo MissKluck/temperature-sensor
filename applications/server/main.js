@@ -3,7 +3,7 @@ import { ServerResponse, IncomingMessage, createServer } from 'node:http'
 import { appendFile, writeFile, readFile, mkdir } from 'node:fs/promises'
 
 let reportId = 0
-const reportsPath = "./data/reports.json"
+const reportsPath = "/app/data/reports.json"
 
 async function configureEnviroment() {
      // Create files and directory if they don't exist
@@ -62,8 +62,8 @@ function registerNewMeasurement(request, response) {
     request.on("data", (chunk) => {data = data + chunk})
 
     request.on("end", () => {
-
         const obj = JSON.parse(data)
+
         const newReport = {
             reportId: reportId++,
             reportDate: new Date().toISOString(),
