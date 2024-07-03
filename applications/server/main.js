@@ -21,7 +21,6 @@ async function configureEnviroment() {
 }
 
 // IO (InputOutput) Function
-const reports = []
 async function appendReport(newReport) {
    
     // Read current stored data
