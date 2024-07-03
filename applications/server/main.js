@@ -5,7 +5,7 @@ import { appendFile, writeFile, readFile, mkdir } from 'node:fs/promises'
 let reportId = 0
 const reportsPath = "/app/data/reports.json"
 
-async function configureEnviroment() {
+async function setupEnviroment() {
      // Create files and directory if they don't exist
      try {
         await readFile(reportsPath)
@@ -37,7 +37,10 @@ async function appendReport(newReport) {
     
 }
 
-async function loadReports() {}
+async function loadReports() {
+    const data = await readFile(reportsPath)
+    return data
+}
 
 
 /** 
@@ -47,9 +50,9 @@ async function loadReports() {}
  * }} response
  */
 
-function getAllReports(request, response) {
+async function getAllReports(request, response) {
     // Convert to network format
-    const data = JSON.stringify(reports)
+    const data = await loadReports()
 
     // Send the resulting package
     response.end(data)
@@ -124,7 +127,7 @@ const server = createServer((request, response) => {
     }  
 })
 
-configureEnviroment()
+setupEnviroment()
 
 // Start the server
 server.listen(3000, "0.0.0.0", () => {
