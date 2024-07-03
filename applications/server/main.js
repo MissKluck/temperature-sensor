@@ -1,7 +1,9 @@
 
-import { ServerResponse, IncomingMessage, createServer } from 'node:http'
-import { appendFile, writeFile, readFile, mkdir } from 'node:fs/promises'
+import { createServer } from 'node:http'
+import { writeFile, readFile, mkdir } from 'node:fs/promises'
 import { getAllReports, registerNewMeasurement, reportsPath } from './handlers/reportHandlers.js'
+import { logger } from './middlewares/logger.js'
+import { setCors } from './middlewares/setCors.js'
 
 
 // Lifecycle Initialisation --> What it does when the program starts
@@ -18,30 +20,6 @@ async function setupEnviroment() {
         }
         await writeFile(reportsPath, "[]")
     }
-}
-
-
-
-// Cross cutting Middleware
-/** 
- * @param {IncomingMessage} request
- */
-
-function logger(request) {
-    const structuredLog = {
-        type: "info",
-        path: request.url,
-        method: request.method,
-        timeStamp: new Date().toISOString(),
-    }
-    
-    console.log(structuredLog)
-}
-
-function setCors(response) {
-    response.setHeader(
-        "Access-Control-Allow-Origin", '*'
-    )
 }
 
 // Create a new server - Main Program Loop - what your program actually does
@@ -69,8 +47,6 @@ const server = createServer((request, response) => {
         response.end("Resource not found")
     }  
 })
-
-
 
 // Configure the server - Lifecycle definition
 await setupEnviroment()
