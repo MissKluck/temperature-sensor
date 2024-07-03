@@ -2,10 +2,10 @@ const serverAddress = "http://localhost:3000/measurements"
 
 function getRandomNumber(min, max) {
   const range = max - min
-  ((Math.random() * range) + min)
+  return ((Math.random() * range) + min)
 }
 
-function logTemperature() {
+async function logTemperature() {
    
    const report = {
     sensorId: 0,
@@ -15,11 +15,13 @@ function logTemperature() {
  console.log("logging new report")
  console.log(report)
  
- try { fetch(serverAddress, {
+ try { 
+  await fetch(serverAddress, {
     method: "POST", 
     body: JSON.stringify(report)
-  })} catch (error) {
-    console.log("Failed to fetch")
+  })
+  } catch (error) {
+    console.log("Failed to report to server")
   }
 }
 
