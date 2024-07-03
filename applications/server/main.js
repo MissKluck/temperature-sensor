@@ -1,10 +1,10 @@
 
 import { ServerResponse, IncomingMessage, createServer } from 'node:http'
 import { appendFile, writeFile, readFile, mkdir } from 'node:fs/promises'
+import { getAllReports, registerNewMeasurement, reportsPath } from './handlers/reportHandlers.js'
 
-let reportId = 0
-const reportsPath = "/app/data/reports.json"
 
+// Lifecycle Initialisation --> What it does when the program starts
 async function setupEnviroment() {
      // Create files and directory if they don't exist
      try {
@@ -20,66 +20,9 @@ async function setupEnviroment() {
     }
 }
 
-// IO (InputOutput) Function
-async function appendReport(newReport) {
-   
-    // Read current stored data
-    const currentReportsRaw = await readFile(reportsPath)
-    const currentReports = JSON.parse(currentReportsRaw)
-
-    // Create a new data set
-    const newReports = [... currentReports, newReport]
-    const reportString = JSON.stringify(newReports)
-    
-    // Write to file
-    await writeFile(reportsPath, reportString, { encoding: "utf-8"})
-
-    
-}
-
-async function loadReports() {
-    const data = await readFile(reportsPath)
-    return data
-}
 
 
-/** 
- * @param {IncomingMessage} request
- * @param {ServerResponse<IncomingMessage> & {
- * req: IncomingMessage;
- * }} response
- */
-
-async function getAllReports(request, response) {
-    // Convert to network format
-    const data = await loadReports()
-
-    // Send the resulting package
-    response.end(data)
-}
-
-function registerNewMeasurement(request, response) {
-    let data = ""
-
-    request.on("data", (chunk) => {data = data + chunk})
-
-    request.on("end", () => {
-        const obj = JSON.parse(data)
-
-        const newReport = {
-            reportId: reportId++,
-            reportDate: new Date().toISOString(),
-            temperature: obj.temperature,
-        }
-
-        appendReport(newReport)
-        reports.push(newReport)
-        response.end("Report registered\n") 
-    })
-
-   
-}
-
+// Cross cutting Middleware
 /** 
  * @param {IncomingMessage} request
  */
@@ -101,7 +44,7 @@ function setCors(response) {
     )
 }
 
-// Create a new server
+// Create a new server - Main Program Loop - what your program actually does
 const server = createServer((request, response) => {
     // Middleware --> setter opp noe logikk som skal ta og skje før vi sender det videre til de spesifikke handlerene
     logger(request)
@@ -127,14 +70,17 @@ const server = createServer((request, response) => {
     }  
 })
 
-setupEnviroment()
+
+
+// Configure the server - Lifecycle definition
+await setupEnviroment()
 
 // Start the server
 server.listen(3000, "0.0.0.0", () => {
     console.log("Server listening on http://localhost:3000")
 })
 
-// Lytt etter avslutningsmeldinger
+// Lytt etter avslutningsmeldinger --> Lifecycle shutdown
 process.addListener("SIGTERM", () => { 
     process.exit() 
 })
